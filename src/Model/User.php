@@ -15,4 +15,8 @@ class User extends Eloquent {
       return false;
     }
   }
+
+  public function shifts() {
+    return $this->hasMany('ShiftApi\Model\Shift', 'employee_id');
+  }
 }

@@ -21,6 +21,7 @@ class ListMyShifts implements DomainInterface
 
     $my_id = [$this->auth->User->id];
     $my_shifts = \ShiftApi\Model\Shift::where('employee_id', $my_id);
+    $my_shifts = $my_shifts->with('manager');
 
     if ($this->helper->checkTrue($input, 'unassigned')) {
       $my_shifts = $my_shifts->orWhereNull('employee_id');
