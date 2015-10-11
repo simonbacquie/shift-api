@@ -35,8 +35,6 @@ class Shift extends Eloquent {
   // }
 
   public static function shiftsInTimeRange($start_time, $end_time) {
-    print_r($start_time);
-    print_r($end_time);
     return self::where('start_time', '>=', $start_time)
       ->where('end_time', '<=', $end_time);
   }

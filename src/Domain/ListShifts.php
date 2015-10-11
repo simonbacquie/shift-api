@@ -8,22 +8,27 @@ use Spark\Payload;
 class ListShifts implements DomainInterface
 {
 
-  public function __construct(\ShiftApi\Service\Auth $auth) {
+  public function __construct(\ShiftApi\Service\Auth $auth, \ShiftApi\Service\ParamsHelper $paramsHelper) {
     $this->auth = $auth;
+    $this->helper = $paramsHelper;
   }
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorize($input, 'ListShifts')) {
+    if (!$this->auth->authorizeEndpoint($input, 'ListShifts')) {
       return $this->auth->errorPayload;
     }
 
-    \ShiftApi\Model\Shift
+    $shifts = \ShiftApi\Model\Shift::shiftsInTimeRange($input['start_time'], $input['end_time']);
+    $shifts = $shifts->with('manager')->get();
+    // $my_shifts = $my_shifts->with('overlapping_shifts');
+
+    // $shifts = $shifts->get();
 
     return (new Payload)
       ->withStatus(200)
-      ->withOutput([
-        'hello' => $name,
-      ]);
+      ->withOutput(
+        $shifts->toArray()
+      );
   }
 }
