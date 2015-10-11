@@ -13,6 +13,11 @@ class Shift extends Eloquent {
       ->select('id', 'name', 'email', 'phone');
   }
 
+  public function employee() {
+    return $this->hasOne('ShiftApi\Model\User', 'id', 'employee_id')
+      ->select('id', 'name', 'email', 'phone');
+  }
+
   // public function employeesForShift($shift_id) {
   //   return $this->where('id', $shift_id)
   //          
