@@ -15,7 +15,7 @@ class Hello implements DomainInterface
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorize($input, 'manager')) {
+    if (!$this->auth->authorizeEndpoint($input, 'ListShifts')) {
       return $this->auth->errorPayload;
     }
     // if (\Auth::validateLogin($input, 'manager')) {
@@ -28,6 +28,8 @@ class Hello implements DomainInterface
     if (!empty($input['name'])) {
       $name = $input['name'];
     }
+
+    // die();
 
     return (new Payload)
       ->withStatus(200)

@@ -12,12 +12,17 @@ class Auth
   public $errorPayload;
   public $User;
 
+  const EMPLOYEE_PERMISSIONS = [
+    'ListShifts',
+    'ListShifts.FilterByDate'
+  ];
+
   const MANAGER_PERMISSIONS = [
     'ListShifts',
     'ListShifts.FilterByDate'
-  ]
+  ];
 
-  public function authorizeEndpoint($input, $required_role = null) {
+  public function authorizeEndpoint($input, $required_permission = null) {
     if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
       $email = $_SERVER['PHP_AUTH_USER'];
       $provided_password = $_SERVER['PHP_AUTH_PW'];
@@ -29,13 +34,13 @@ class Auth
         return false;
       }
       // print_r($this->User->password);
-      print_r(($provided_password));
+      // print_r(($provided_password));
       // print_r(sha1($provided_password));
-      if ($this->User->password != sha1($provided_password)) {
+      if (!$this->User->correctPassword($provided_password)) {
         $this->errorPayload = self::invalidCredentialsResponse();
         return false;
       }
-      if ($required_role && $this->User->role != $required_role) {
+      if ($required_permission && !$this->hasPermission($required_permission)) {
         $this->errorPayload = self::unauthorizedEndpointResponse();
         return false;
       }
@@ -43,10 +48,15 @@ class Auth
       $this->errorPayload = self::credentialsRequiredResponse();
       return false;
     }
+    return true;
+  }
+
+  public function hasPermission($permission) {
+    return in_array($permission, $this->getPermissions());
   }
 
   private function getPermissions() {
-    return constant(strtoupper($this->User->role) . '_PERMISSIONS');
+    return constant('self::' . strtoupper($this->User->role) . '_PERMISSIONS');
   }
 
   private static function credentialsRequiredResponse() {
