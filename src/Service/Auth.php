@@ -13,7 +13,7 @@ class Auth
   public $User;
 
   const EMPLOYEE_PERMISSIONS = [
-    'ListShifts',
+    'ListMyShifts',
     'ListShifts.FilterByDate'
   ];
 

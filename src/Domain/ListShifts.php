@@ -14,9 +14,11 @@ class ListShifts implements DomainInterface
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorize($input, 'manager')) {
+    if (!$this->auth->authorize($input, 'ListShifts')) {
       return $this->auth->errorPayload;
     }
+
+    \ShiftApi\Model\Shift
 
     return (new Payload)
       ->withStatus(200)
