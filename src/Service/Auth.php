@@ -14,7 +14,8 @@ class Auth
 
   const EMPLOYEE_PERMISSIONS = [
     'ListMyShifts',
-    'ListShifts.FilterByDate'
+    'ListShifts.FilterByDate',
+    'ShowMyShift'
   ];
 
   const MANAGER_PERMISSIONS = [

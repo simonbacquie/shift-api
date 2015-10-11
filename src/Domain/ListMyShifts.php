@@ -19,9 +19,10 @@ class ListMyShifts implements DomainInterface
       return $this->auth->errorPayload;
     }
 
-    $my_id = [$this->auth->User->id];
+    $my_id = $this->auth->User->id;
     $my_shifts = \ShiftApi\Model\Shift::where('employee_id', $my_id);
     $my_shifts = $my_shifts->with('manager');
+    // $my_shifts = $my_shifts->with('overlapping_shifts');
 
     if ($this->helper->checkTrue($input, 'unassigned')) {
       $my_shifts = $my_shifts->orWhereNull('employee_id');
