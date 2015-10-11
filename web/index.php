@@ -2,7 +2,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/Model/User.php';
-require __DIR__ . '/../src/Model/Auth.php';
+require __DIR__ . '/../src/Service/Auth.php';
+// require __DIR__ . '/../src/Exception/AuthException.php'; // REMOVE THIS
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -12,13 +13,13 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule;
 $capsule->addConnection([
   'driver'    => 'mysql',
-  'host'      => 'host',
+  'host'      => 'localhost',
   'database'  => 'spark-project',
   'username'  => 'homestead',
-  'password'  => 'homestead',
+  'password'  => 'secret',
   'charset'   => 'utf8',
   'collation' => 'utf8_general_ci',
-  'prefix'    => 'prefix_'
+  'prefix'    => ''
 ]);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
@@ -28,10 +29,8 @@ date_default_timezone_set('UTC');
 $auth = new \ShiftApi\Service\Auth;
 
 $injector = new \Auryn\Injector;
-// $injector->share($capsule);
 $injector->share($auth);
 
-// $app = Spark\Application::boot();
 $app = Spark\Application::boot($injector);
 
 $app->setMiddleware([
@@ -42,7 +41,12 @@ $app->setMiddleware([
 ]);
 
 $app->addRoutes(function(Spark\Router $r) {
-  $r->get('/hello[/{name}]', 'Spark\Project\Domain\Hello');
+  $r->get('/hello[/{name}]',   'Spark\Project\Domain\Hello');
+
+  // $r->get('/shifts',           'Spark\Project\Domain\ListShifts');
+  // $r->get('/shifts/{id}',      'Spark\Project\Domain\ShowShift');
+  //
+  // $r->get('/workweeks/{date}', 'Spark\Project\Domain\ShowWorkweekByDate');
 });
 
 $app->run();
