@@ -5,7 +5,7 @@ namespace Spark\Project\Domain;
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
 
-class ShowMyShift implements DomainInterface
+class ShowWorkweekByDate implements DomainInterface
 {
 
   public function __construct(\ShiftApi\Service\Auth $auth, \ShiftApi\Service\ParamsHelper $paramsHelper) {
@@ -22,10 +22,15 @@ class ShowMyShift implements DomainInterface
     }
 
     $my_id = $this->auth->User->id;
-    $my_shift = \ShiftApi\Model\Shift::where('id', $input['id'])->first();
-    $overlapping_shifts = \ShiftApi\Model\Shift::shiftsInTimeRange(
-      $my_shift->start_time, $my_shift->end_time);
-    $overlapping_shifts = $overlapping_shifts->with('employee')->get();
+
+    // print_r($input);
+
+    $workweek = \ShiftApi\Model\Shift::hoursByWeek($input['date'], $my_id);
+
+    // $my_shift = \ShiftApi\Model\Shift::where('id', $input['id'])->first();
+    // $overlapping_shifts = \ShiftApi\Model\Shift::shiftsInTimeRange(
+      // $my_shift->start_time, $my_shift->end_time);
+    // $overlapping_shifts = $overlapping_shifts->with('employee')->get();
     // $my_shift = $my_shift->get();
     // $overlapping_shifts = $my_shift->with('overlapping_shifts')->get();
     // $overlapping_shifts = 
@@ -37,7 +42,7 @@ class ShowMyShift implements DomainInterface
     return (new Payload)
       ->withStatus(200)
       ->withOutput(
-        $overlapping_shifts->toArray()
+        $workweek
       );
   }
 }

@@ -34,10 +34,41 @@ class Shift extends Eloquent {
   //     ->andWhere('end_time', '<=', $this->end_time);
   // }
 
-  public static function shifts_in_time_range($start_time, $end_time) {
+  public static function shiftsInTimeRange($start_time, $end_time) {
     print_r($start_time);
     print_r($end_time);
     return self::where('start_time', '>=', $start_time)
       ->where('end_time', '<=', $end_time);
+  }
+
+  public static function hoursByWeek($week_of, $employee_id) {
+    $week_of_time = strtotime($week_of);
+    $begin_string = date("l", $week_of_time) == 'Sunday' ? 'this Sunday' : 'last Sunday';
+    $end_string   = 'next Sunday';
+
+    $week_begins = date('Y-m-d H:i:s', strtotime($begin_string, strtotime($week_of)));
+    $week_ends = date('Y-m-d H:i:s', strtotime($end_string, strtotime($week_of)));
+
+    $shifts_in_week = self::where('employee_id', $employee_id)
+      ->where('start_time', '>=', $week_begins)
+      ->where('start_time', '<=', $week_ends)->get();
+
+    $unix_seconds = 0;
+
+    foreach ($shifts_in_week as $shift) {
+      $start_time = new \DateTime($shift->start_time);
+      $end_time = new \DateTime($shift->end_time);
+
+      $unix_seconds += $end_time->getTimestamp() - $start_time->getTimestamp();
+    }
+
+    $hours = $unix_seconds / 60 / 60;
+
+    return [
+      'week_begins' => $week_begins,
+      'week_ends' => $week_ends,
+      'hours' => $hours,
+      'shifts' => $shifts_in_week->toArray()
+    ];
   }
 }
