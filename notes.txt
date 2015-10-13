@@ -32,3 +32,8 @@ As a manager, I want to contact an employee, by seeing employee details.
 confusing: https://github.com/sparkphp/spark/blob/b2a9b32f461ab39f83089b9eade46f8a37e70156/src/Formatter/AbstractFormatter.php#L43-L59
 
 lumbergh password: yeahhh
+
+TODO:
+- put response payloads back the way they were, use predefined codes
+- pull down schema into repo
+- clean up names, paramshelper name, namespace useage

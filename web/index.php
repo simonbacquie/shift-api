@@ -50,8 +50,11 @@ $app->addRoutes(function(Spark\Router $r) {
 
   $r->get('/shifts',              'Spark\Project\Domain\ListShifts');
   $r->post('/shifts',             'Spark\Project\Domain\CreateShift');
+  $r->put('/shifts',              'Spark\Project\Domain\UpdateShift');
   $r->get('/me/shifts',           'Spark\Project\Domain\ListMyShifts');
   $r->get('/me/shifts/{id}',      'Spark\Project\Domain\ShowMyShift');
+  $r->get('/employees',           'Spark\Project\Domain\ListEmployees');
+  $r->get('/employees/{id}',      'Spark\Project\Domain\ShowEmployee');
   //
   $r->get('/me/workweeks/{date}', 'Spark\Project\Domain\ShowWorkweekByDate');
 });

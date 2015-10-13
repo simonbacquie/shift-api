@@ -20,7 +20,11 @@ class Auth
 
   const MANAGER_PERMISSIONS = [
     'ListShifts',
-    'ListShifts.FilterByDate'
+    'ListShifts.FilterByDate',
+    'CreateShift',
+    'UpdateShift',
+    'ListEmployees',
+    'ShowEmployee'
   ];
 
   public function authorizeEndpoint($input, $required_permission = null) {
