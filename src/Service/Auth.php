@@ -34,13 +34,9 @@ class Auth
 
       $this->User = User::where('email', $email)->first();
       if (!$this->User) {
-      // if (is_null($this->User)) {
         $this->errorPayload = self::invalidCredentialsResponse();
         return false;
       }
-      // print_r($this->User->password);
-      // print_r(($provided_password));
-      // print_r(sha1($provided_password));
       if (!$this->User->correctPassword($provided_password)) {
         $this->errorPayload = self::invalidCredentialsResponse();
         return false;
@@ -66,7 +62,7 @@ class Auth
 
   private static function credentialsRequiredResponse() {
     return (new Payload)
-      ->withStatus(401)
+      ->withStatus(Payload::INVALID)
       ->withOutput([
         'error' => 'Basic auth username & password required to authenticate.',
       ]);
@@ -74,7 +70,7 @@ class Auth
 
   private static function invalidCredentialsResponse() {
     return (new Payload)
-      ->withStatus(401)
+      ->withStatus(Payload::INVALID)
       ->withOutput([
         'error' => 'Invalid login credentials.',
       ]);
@@ -82,11 +78,9 @@ class Auth
 
   private static function unauthorizedEndpointResponse() {
     return (new Payload)
-      ->withStatus(403)
+      ->withStatus(Payload::INVALID)
       ->withOutput([
         'error' => 'You are not authorized to access this resource',
       ]);
   }
 }
-
-

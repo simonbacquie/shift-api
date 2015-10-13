@@ -30,7 +30,7 @@ class ListMyShifts implements DomainInterface
     $my_shifts = $my_shifts->get();
 
     return (new Payload)
-      ->withStatus(200)
+      ->withStatus(Payload::OK)
       ->withOutput(
         $my_shifts->toArray()
       );

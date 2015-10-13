@@ -26,7 +26,7 @@ class ListShifts implements DomainInterface
     // $shifts = $shifts->get();
 
     return (new Payload)
-      ->withStatus(200)
+      ->withStatus(Payload::OK)
       ->withOutput(
         $shifts->toArray()
       );

@@ -46,8 +46,6 @@ $app->setMiddleware([
 ]);
 
 $app->addRoutes(function(Spark\Router $r) {
-  $r->get('/hello[/{name}]',   'Spark\Project\Domain\Hello');
-
   $r->get('/shifts',              'Spark\Project\Domain\ListShifts');
   $r->post('/shifts',             'Spark\Project\Domain\CreateShift');
   $r->put('/shifts',              'Spark\Project\Domain\UpdateShift');
