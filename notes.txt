@@ -1,0 +1,34 @@
+X GET /me/shifts
+X As an employee, I want to know when I am working, by being able to see all of the shifts assigned to me.
+X As an employee, I want to know who I am working with, by being able to see the employees that are working during the same time period as me.
+X As an employee, I want to be able to contact my managers, by seeing manager contact information for my shifts.
+
+X GET /me/shifts
+X GET /shifts?unassigned=true
+
+X GET /me/timesheets
+X As an employee, I want to know how much I worked, by being able to get a summary of hours worked for each week.
+
+
+GET /managers
+
+X GET /shifts
+X GET /shifts?start_time=&end_time=
+X As a manager, I want to see the schedule, by listing shifts within a specific time period.
+
+
+POST /shifts
+As a manager, I want to schedule my employees, by creating shifts for any employee.
+
+
+PUT /shifts
+As a manager, I want to be able to change a shift, by updating the time details.
+As a manager, I want to be able to assign a shift, by changing the employee that will work a shift.
+
+GET /employees
+GET /employees/:id
+As a manager, I want to contact an employee, by seeing employee details.
+
+confusing: https://github.com/sparkphp/spark/blob/b2a9b32f461ab39f83089b9eade46f8a37e70156/src/Formatter/AbstractFormatter.php#L43-L59
+
+lumbergh password: yeahhh

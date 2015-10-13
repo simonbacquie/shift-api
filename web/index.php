@@ -2,7 +2,9 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/Model/User.php';
+require __DIR__ . '/../src/Model/Shift.php';
 require __DIR__ . '/../src/Service/Auth.php';
+require __DIR__ . '/../src/Service/ParamsHelper.php';
 // require __DIR__ . '/../src/Exception/AuthException.php'; // REMOVE THIS
 
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -31,6 +33,9 @@ $auth = new \ShiftApi\Service\Auth;
 $injector = new \Auryn\Injector;
 $injector->share($auth);
 
+$paramsHelper = new \ShiftApi\Service\ParamsHelper;
+$injector->share($paramsHelper);
+
 $app = Spark\Application::boot($injector);
 
 $app->setMiddleware([
@@ -43,10 +48,12 @@ $app->setMiddleware([
 $app->addRoutes(function(Spark\Router $r) {
   $r->get('/hello[/{name}]',   'Spark\Project\Domain\Hello');
 
-  // $r->get('/shifts',           'Spark\Project\Domain\ListShifts');
-  // $r->get('/shifts/{id}',      'Spark\Project\Domain\ShowShift');
+  $r->get('/shifts',              'Spark\Project\Domain\ListShifts');
+  $r->post('/shifts',             'Spark\Project\Domain\CreateShift');
+  $r->get('/me/shifts',           'Spark\Project\Domain\ListMyShifts');
+  $r->get('/me/shifts/{id}',      'Spark\Project\Domain\ShowMyShift');
   //
-  // $r->get('/workweeks/{date}', 'Spark\Project\Domain\ShowWorkweekByDate');
+  $r->get('/me/workweeks/{date}', 'Spark\Project\Domain\ShowWorkweekByDate');
 });
 
 $app->run();
