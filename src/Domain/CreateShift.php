@@ -4,6 +4,7 @@ namespace Spark\Project\Domain;
 
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
+use \ShiftApi\Model\Shift as Shift;
 
 class CreateShift extends AuthorizedDomain
 {
@@ -12,21 +13,22 @@ class CreateShift extends AuthorizedDomain
   {
     $this->requirePermission('CreateShift');
 
-    print_r($input);
-
-    // \ShiftApi\Model\Shift
-
-    // $shifts = \ShiftApi\Model\Shift::shiftsInTimeRange($input['start_time'], $input['end_time']);
-    // $shifts = $shifts->with('manager')->get();
-    // $my_shifts = $my_shifts->with('overlapping_shifts');
-
-    // $shifts = $shifts->get();
+    $shift = new Shift();
+    if ($shift->validate($input)) {
+      $shift = new Shift($input);
+      $shift->save();
+    } else {
+      return (new Payload)
+        ->withStatus(Payload::INVALID) // should be 400
+        ->withOutput(
+          ['error' => 'Missing required fields.']
+        );
+    }
 
     return (new Payload)
-      ->withStatus(Payload::OK)
+      ->withStatus(Payload::OK) // should be 201
       ->withOutput(
-        []
-        // $shifts->toArray()
+        $shift->toArray()
       );
   }
 }

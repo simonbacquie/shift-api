@@ -4,9 +4,23 @@
 namespace ShiftApi\Model;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Validation\Factory as ValidatorFactory;
+use Symfony\Component\Translation\Translator;
 
 class Shift extends Eloquent {
-  protected $table = 'shifts';
+  protected $table          = 'shifts';
+  protected $guarded        = ['id']; // don't accept id in mass assignment, must auto-increment
+  private $validation_rules = [
+    'start_time' => 'required',
+    'end_time'   => 'required'
+  ];
+
+  public function validate($data) {
+    $factory = new ValidatorFactory(new Translator('en'));
+    $v = $factory->make($data, $this->validation_rules);
+
+    return $v->passes();
+  }
 
   public function manager() {
     return $this->belongsTo('ShiftApi\Model\User', 'manager_id', 'id')
