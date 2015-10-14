@@ -5,6 +5,8 @@ require __DIR__ . '/../src/Model/User.php';
 require __DIR__ . '/../src/Model/Shift.php';
 require __DIR__ . '/../src/Service/Auth.php';
 require __DIR__ . '/../src/Service/ParamsHelper.php';
+require __DIR__ . '/../src/AuthorizedDomain.php';
+// require __DIR__ . '/../src/hacks.php';
 // require __DIR__ . '/../src/Exception/AuthException.php'; // REMOVE THIS
 
 use Illuminate\Database\Capsule\Manager as Capsule;

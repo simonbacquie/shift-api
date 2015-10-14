@@ -27,7 +27,7 @@ class Auth
     'ShowEmployee'
   ];
 
-  public function authorizeEndpoint($input, $required_permission = null) {
+  public function authorizeEndpoint($required_permission) {
     if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
       $email = $_SERVER['PHP_AUTH_USER'];
       $provided_password = $_SERVER['PHP_AUTH_PW'];
