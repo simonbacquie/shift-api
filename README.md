@@ -13,7 +13,8 @@ Use HTTP basic auth to authenticate every request, with the username as the User
 ### Users
 
 |name|email|password|
-|Simon|simon@testapp.com|password|
+|----|-----|--------|
+|Peter|peter@innitech.com|superman3|
 |Joanna|joanna@schlotzskys.net|piecesofflair|
 |Michael|mbolton@intertrode.com|tpsreports|
 
@@ -21,6 +22,7 @@ Use HTTP basic auth to authenticate every request, with the username as the User
 ### Managers
 
 |name|email|password|
+|----|-----|--------|
 |Lumbergh|lumbergh@innitech.com|yeahhh|
 |Bob|bob@consultants.net|whatdoyoudohere|
 
