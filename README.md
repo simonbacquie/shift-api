@@ -6,7 +6,7 @@ Your user can be either an `employee`, or a `manager`.
 
 ## Auth
 
-Use HTTP basic auth to authenticate every request, with the username as the User's `email`. PAsswords are saved as sha1 hashes, so here are some test credentials:
+Use HTTP basic auth to authenticate every request, with the username as the User's `email`. Passwords are saved as sha1 hashes, so here are some test credentials:
 
 ## Sample Credentials
 
