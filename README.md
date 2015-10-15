@@ -34,6 +34,7 @@ This was my first time using the Spark framework. I liked it overall, but I was 
 
 - In a Domain, why does $input not get populated as an array if the input is a JSON string? If the request's Content-type is JSON, it should parse it for you and make it available to you under $input.
 - Why does AbstractFormatter only want me to send a few possible HTTP status codes (200, 400, 500, 520)? I would have wanted to return a 201 on a create and 204 on an update, for example. I should be able to send whatever integer HTTP status code I want when creating a Payload, and have it reach the response intact. https://github.com/sparkphp/spark/blob/b2a9b32f461ab39f83089b9eade46f8a37e70156/src/Formatter/AbstractFormatter.php#L43-L59
+- I attempted to hack around these issues without modifying the original framework source in the `vendor` folder, but wasn't successful. This can be seen under `hacks.php`
 
 ## curl examples
 
