@@ -13,10 +13,10 @@ abstract class AuthorizedDomain implements DomainInterface
     $this->helper = $paramsHelper;
   }
 
-  public function requirePermission($permission) {
-    if (!$this->auth->authorizeEndpoint($permission)) {
-      return $this->auth->errorPayload;
-    }
-  }
+  // public function requirePermission($permission) {
+  //   if (!$this->auth->authorizeEndpoint($permission)) {
+  //     return $this->auth->errorPayload;
+  //   }
+  // }
 
 }

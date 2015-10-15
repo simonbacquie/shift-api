@@ -75,7 +75,7 @@ class Shift extends Eloquent {
     }
 
     $hours = $unix_seconds / 60 / 60;
-
+    
     return [
       'week_begins' => $week_begins,
       'week_ends' => $week_ends,

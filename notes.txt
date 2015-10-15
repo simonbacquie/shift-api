@@ -42,3 +42,5 @@ TODO:
 curl -X POST -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" -H "Content-Type: application/x-www-form-urlencoded" -d 'manager_id=2&employee_id=1&start_time=2015-02-03+00%3A00%3A00&end_time=2015-02-03+08%3A00%3A00' 'http://spark-project.app/shifts'
 
 curl -X PUT -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" Content-Type: application/x-www-form-urlencoded" -d 'end_time=2015-02-03+20%3A16%3A00&id=17' 'http://spark-project.app/shifts'
+
+curl -X GET -H "Authorization: Basic cGV0ZXJAaW5uaXRlY2guY29tOnN1cGVybWFuMw==" 'http://spark-project.app/me/workweeks/2015-02-01'
