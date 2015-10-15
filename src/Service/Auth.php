@@ -29,7 +29,7 @@ class Auth
   ];
 
   public function authorizeEndpoint($required_permission) {
-    if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+    if (isset($_SERVER['PHP_AUTH_USER']) || isset($_SERVER['PHP_AUTH_PW'])) {
       $email = $_SERVER['PHP_AUTH_USER'];
       $provided_password = $_SERVER['PHP_AUTH_PW'];
 

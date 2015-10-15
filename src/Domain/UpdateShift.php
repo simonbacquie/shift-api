@@ -11,7 +11,9 @@ class UpdateShift extends AuthorizedDomain
 
   public function __invoke(array $input)
   {
-    $this->requirePermission('UpdateShift');
+    if (!$this->auth->authorizeEndpoint('UpdateShift')) {
+      return $this->auth->errorPayload;
+    }
     // wow, PHP doesn't automatically parse incoming data if it's a PUT...
     // ideally $input should contain the parsed data
     // leaving this hack here for now

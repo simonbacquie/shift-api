@@ -11,7 +11,9 @@ class CreateShift extends AuthorizedDomain
 
   public function __invoke(array $input)
   {
-    $this->requirePermission('CreateShift');
+    if (!$this->auth->authorizeEndpoint('CreateShift')) {
+      return $this->auth->errorPayload;
+    }
 
     $shift = new Shift();
     if (!isset($input['manager_id'])) {

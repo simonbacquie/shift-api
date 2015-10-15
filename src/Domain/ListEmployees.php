@@ -11,7 +11,9 @@ class ListEmployees extends AuthorizedDomain
 
   public function __invoke(array $input)
   {
-    $this->requirePermission('ListEmployees');
+    if (!$this->auth->authorizeEndpoint('ListEmployees')) {
+      return $this->auth->errorPayload;
+    }
 
     $employees = User::where(['role' => 'employee'])
       ->get(['id', 'name', 'role', 'email', 'phone', 'created_at', 'updated_at']);

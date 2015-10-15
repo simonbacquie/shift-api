@@ -10,7 +10,9 @@ class ListMyShifts extends AuthorizedDomain
 
   public function __invoke(array $input)
   {
-    $this->requirePermission('ListMyShifts');
+    if (!$this->auth->authorizeEndpoint('ListMyShifts')) {
+      return $this->auth->errorPayload;
+    }
 
     $my_id = $this->auth->User->id;
     $my_shifts = \ShiftApi\Model\Shift::where('employee_id', $my_id);

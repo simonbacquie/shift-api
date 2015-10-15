@@ -39,8 +39,21 @@ TODO:
 - clean up names, paramshelper name, namespace useage
 - set whitespace to 4 spaces
 
+See all my shifts:
+curl -X GET -H "Authorization: Basic cGV0ZXJAaW5uaXRlY2guY29tOnN1cGVybWFuMw==" -H "Cache-Control: no-cache" -H "Postman-Token: 18b82de1-437b-ad79-b28e-bcbdf8552672" 'http://spark-project.app/me/shifts'
+
+see who works with you:
+curl -X GET -H "Authorization: Basic cGV0ZXJAaW5uaXRlY2guY29tOnN1cGVybWFuMw==" -H "Cache-Control: no-cache" -H "Postman-Token: 0f824584-fafc-d367-454e-55ad31677bd4" 'http://spark-project.app/me/shifts/1'
+
 curl -X POST -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" -H "Content-Type: application/x-www-form-urlencoded" -d 'manager_id=2&employee_id=1&start_time=2015-02-03+00%3A00%3A00&end_time=2015-02-03+08%3A00%3A00' 'http://spark-project.app/shifts'
 
 curl -X PUT -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" Content-Type: application/x-www-form-urlencoded" -d 'end_time=2015-02-03+20%3A16%3A00&id=17' 'http://spark-project.app/shifts'
 
 curl -X GET -H "Authorization: Basic cGV0ZXJAaW5uaXRlY2guY29tOnN1cGVybWFuMw==" 'http://spark-project.app/me/workweeks/2015-02-01'
+
+For manager: see shifts in date range
+
+curl -X GET -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" -H "Cache-Control: no-cache" -H "Postman-Token: 5354f627-85ae-487c-320f-b063ea4f7878" 'http://spark-project.app/shifts?start_time=2015-10-01&end_time=2015-10-30'
+
+show employee:
+curl -X GET -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" -H "Cache-Control: no-cache" -H "Postman-Token: 0f80dd0b-00fd-d786-3fd9-0089c26fe5d7" 'http://spark-project.app/employees/1'
