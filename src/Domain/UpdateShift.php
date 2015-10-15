@@ -13,6 +13,7 @@ class UpdateShift extends AuthorizedDomain
   {
     $this->requirePermission('UpdateShift');
     // wow, PHP doesn't automatically parse incoming data if it's a PUT...
+    // ideally $input should contain the parsed data
     // leaving this hack here for now
     parse_str(file_get_contents("php://input"), $input);
 

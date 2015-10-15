@@ -14,6 +14,10 @@ class CreateShift extends AuthorizedDomain
     $this->requirePermission('CreateShift');
 
     $shift = new Shift();
+    if (!isset($input['manager_id'])) {
+      // if no manager_id provided, default to the manager creating the shift
+      $input['manager_id'] = $this->auth->User->id;
+    }
     if ($shift->validate($input)) {
       $shift = new Shift($input);
       $shift->save();

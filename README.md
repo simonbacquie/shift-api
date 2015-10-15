@@ -1,41 +1,34 @@
-# Spark
+# shift-api
 
-Spark is a PSR-7 compliant [Action-Domain-Responder](https://github.com/pmjones/adr)
-(ADR) system. While it may look like a micro-framework (and it is), it is more like a
-wrapper around the real logic of your application domain. It's also [PSR-1](http://www.php-fig.org/psr/psr-1/),
-[PSR-2](http://www.php-fig.org/psr/psr-2/), and [PSR-4](http://www.php-fig.org/psr/psr-4/) compliant.
+REST API written in the Spark framework for PHP. Uses Eloquent, the ORM from Laravel and Lumen, for data mapping.
 
-## Installing Spark
+Your user can be either an `employee`, or a `manager`.
 
-You will need [Composer](https://getcomposer.org) to install Spark.
+## Auth
 
-Pick a project name, and use Composer to create it with Spark. Let's create
-one called `spark-project`:
+Use HTTP basic auth to authenticate every request, with the username as the User's `email`. PAsswords are saved as sha1 hashes, so here are some test credentials:
 
-```bash
-composer create-project -s dev sparkphp/project spark-project
-```
+## Sample Credentials
 
-Confirm the installation by changing into the project directory and starting the
-built-in PHP web server:
+### Users
 
-```bash
-cd spark-project
-php -S localhost:8000 -t web/
-```
+|name|email|password|
+|Simon|simon@testapp.com|password|
+|Joanna|joanna@schlotzskys.net|piecesofflair|
+|Michael|mbolton@intertrode.com|tpsreports|
 
-You can then browse to <http://localhost:8000/hello> and see JSON output:
 
-```json
-{"hello": "world"}
-```
+### Managers
 
-You can also browse to <http://localhost:8000/hello/nancy> and see modified JSON output:
+|name|email|password|
+|Lumbergh|lumbergh@innitech.com|yeahhh|
+|Bob|bob@consultants.net|whatdoyoudohere|
 
-```json
-{"hello":"nancy"}
-```
+Every endpoint is authorized by role.
 
-## Documentation
+## Comments
 
-Not much to read yet. Check out the source project [here](http://github.com/sparkphp/Spark).
+This was my first time using the Spark framework. I liked it overall, but I was a bit puzzled by a couple things:
+
+- In a Domain, why does $input not get populated as an array if the input is a JSON string? If the request's Content-type is JSON, it should parse it for you and make it available to you under $input.
+- Why does AbstractFormatter only want me to send a few possible HTTP status codes (200, 400, 500, 520)? I would have wanted to return a 201 on a create and 204 on an update, for example. I should be able to send whatever integer HTTP status code I want when creating a Payload, and have it reach the response intact.

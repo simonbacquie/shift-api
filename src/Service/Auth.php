@@ -62,7 +62,7 @@ class Auth
 
   private static function credentialsRequiredResponse() {
     return (new Payload)
-      ->withStatus(Payload::INVALID)
+      ->withStatus(Payload::INVALID) // this should be 401
       ->withOutput([
         'error' => 'Basic auth username & password required to authenticate.',
       ]);
@@ -70,7 +70,7 @@ class Auth
 
   private static function invalidCredentialsResponse() {
     return (new Payload)
-      ->withStatus(Payload::INVALID)
+      ->withStatus(Payload::INVALID) // this should be 401
       ->withOutput([
         'error' => 'Invalid login credentials.',
       ]);
@@ -78,7 +78,7 @@ class Auth
 
   private static function unauthorizedEndpointResponse() {
     return (new Payload)
-      ->withStatus(Payload::INVALID)
+      ->withStatus(Payload::INVALID) // this should be 403
       ->withOutput([
         'error' => 'You are not authorized to access this resource',
       ]);

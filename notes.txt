@@ -25,7 +25,7 @@ X PUT /shifts
 As a manager, I want to be able to change a shift, by updating the time details.
 As a manager, I want to be able to assign a shift, by changing the employee that will work a shift.
 
-GET /employees
+X GET /employees
 GET /employees/:id
 As a manager, I want to contact an employee, by seeing employee details.
 
