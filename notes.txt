@@ -17,11 +17,11 @@ X GET /shifts?start_time=&end_time=
 X As a manager, I want to see the schedule, by listing shifts within a specific time period.
 
 
-POST /shifts
+X POST /shifts
 As a manager, I want to schedule my employees, by creating shifts for any employee.
 
 
-PUT /shifts
+X PUT /shifts
 As a manager, I want to be able to change a shift, by updating the time details.
 As a manager, I want to be able to assign a shift, by changing the employee that will work a shift.
 
@@ -38,3 +38,7 @@ TODO:
 - pull down schema into repo
 - clean up names, paramshelper name, namespace useage
 - set whitespace to 4 spaces
+
+curl -X POST -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" -H "Content-Type: application/x-www-form-urlencoded" -d 'manager_id=2&employee_id=1&start_time=2015-02-03+00%3A00%3A00&end_time=2015-02-03+08%3A00%3A00' 'http://spark-project.app/shifts'
+
+curl -X PUT -H "Authorization: Basic bHVtYmVyZ2hAaW5uaXRlY2guY29tOnllYWhoaA==" Content-Type: application/x-www-form-urlencoded" -d 'end_time=2015-02-03+20%3A16%3A00&id=17' 'http://spark-project.app/shifts'

@@ -4,24 +4,22 @@ namespace Spark\Project\Domain;
 
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
+use \ShiftApi\Model\User as User;
 
 class ListEmployees extends AuthorizedDomain
 {
 
   public function __invoke(array $input)
   {
-    $this->requirePermission('CreateShift');
+    $this->requirePermission('ListEmployees');
 
-    $shifts = \ShiftApi\Model\Shift::shiftsInTimeRange($input['start_time'], $input['end_time']);
-    $shifts = $shifts->with('manager')->get();
-    // $my_shifts = $my_shifts->with('overlapping_shifts');
-
-    // $shifts = $shifts->get();
+    $employees = User::where(['role' => 'employee'])
+      ->get(['id', 'name', 'role', 'email', 'phone', 'created_at', 'updated_at']);
 
     return (new Payload)
       ->withStatus(Payload::OK)
       ->withOutput(
-        $shifts->toArray()
+        $employees->toArray()
       );
   }
 }

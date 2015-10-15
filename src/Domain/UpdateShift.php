@@ -4,31 +4,35 @@ namespace Spark\Project\Domain;
 
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
+use \ShiftApi\Model\Shift as Shift;
 
-class UpdateShift implements DomainInterface
+class UpdateShift extends AuthorizedDomain
 {
-
-  public function __construct(\ShiftApi\Service\Auth $auth, \ShiftApi\Service\ParamsHelper $paramsHelper) {
-    $this->auth = $auth;
-    $this->helper = $paramsHelper;
-  }
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorizeEndpoint($input, 'UpdateShift')) {
-      return $this->auth->errorPayload;
+    $this->requirePermission('UpdateShift');
+    // wow, PHP doesn't automatically parse incoming data if it's a PUT...
+    // leaving this hack here for now
+    parse_str(file_get_contents("php://input"), $input);
+
+    $shift = Shift::findOrFail($input['id']);
+    $updated_fields = array_merge($shift->toArray(), $input);
+    if ($shift->validate($updated_fields)) {
+      $shift->fill($updated_fields);
+      $shift->save();
+    } else {
+      return (new Payload)
+        ->withStatus(Payload::INVALID) // should be 400
+        ->withOutput(
+          ['error' => 'Missing required fields.']
+        );
     }
 
-    $shifts = \ShiftApi\Model\Shift::shiftsInTimeRange($input['start_time'], $input['end_time']);
-    $shifts = $shifts->with('manager')->get();
-    // $my_shifts = $my_shifts->with('overlapping_shifts');
-
-    // $shifts = $shifts->get();
-
     return (new Payload)
-      ->withStatus(200)
+      ->withStatus(Payload::OK) // should be 204 with no response
       ->withOutput(
-        $shifts->toArray()
+        $shift->toArray()
       );
   }
 }

@@ -4,28 +4,20 @@ namespace Spark\Project\Domain;
 
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
+use \ShiftApi\Model\Shift as Shift;
 
-class ShowWorkweekByDate implements DomainInterface
+class ShowWorkweekByDate extends AuthorizedDomain
 {
-
-  public function __construct(\ShiftApi\Service\Auth $auth, \ShiftApi\Service\ParamsHelper $paramsHelper) {
-    $this->auth = $auth;
-    $this->helper = $paramsHelper;
-
-    // MAKE SURE YOU CAN ONLY SEE THIS IF IT'S YOUR SHIFT
-  }
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorizeEndpoint($input, 'ShowMyShift')) {
-      return $this->auth->errorPayload;
-    }
+    $this->requirePermission('ShowWorkweekByDate');
 
     $my_id = $this->auth->User->id;
 
     // print_r($input);
 
-    $workweek = \ShiftApi\Model\Shift::hoursByWeek($input['date'], $my_id);
+    $workweek = Shift::hoursByWeek($input['date'], $my_id);
 
     // $my_shift = \ShiftApi\Model\Shift::where('id', $input['id'])->first();
     // $overlapping_shifts = \ShiftApi\Model\Shift::shiftsInTimeRange(
@@ -40,7 +32,7 @@ class ShowWorkweekByDate implements DomainInterface
 
 
     return (new Payload)
-      ->withStatus(200)
+      ->withStatus(Payload::OK)
       ->withOutput(
         $workweek
       );

@@ -18,4 +18,5 @@ abstract class AuthorizedDomain implements DomainInterface
       return $this->auth->errorPayload;
     }
   }
+
 }

@@ -5,21 +5,14 @@ namespace Spark\Project\Domain;
 use Spark\Adr\DomainInterface;
 use Spark\Payload;
 
-class ShowMyShift implements DomainInterface
+class ShowMyShift extends AuthorizedDomain
 {
 
-  public function __construct(\ShiftApi\Service\Auth $auth, \ShiftApi\Service\ParamsHelper $paramsHelper) {
-    $this->auth = $auth;
-    $this->helper = $paramsHelper;
-
-    // MAKE SURE YOU CAN ONLY SEE THIS IF IT'S YOUR SHIFT
-  }
+  // MAKE SURE YOU CAN ONLY SEE THIS IF IT'S YOUR SHIFT
 
   public function __invoke(array $input)
   {
-    if (!$this->auth->authorizeEndpoint($input, 'ShowMyShift')) {
-      return $this->auth->errorPayload;
-    }
+    $this->requirePermission('ShowMyShift');
 
     $my_id = $this->auth->User->id;
     $my_shift = \ShiftApi\Model\Shift::where('id', $input['id'])->first();
@@ -35,7 +28,7 @@ class ShowMyShift implements DomainInterface
 
 
     return (new Payload)
-      ->withStatus(200)
+      ->withStatus(Payload::OK)
       ->withOutput(
         $overlapping_shifts->toArray()
       );
